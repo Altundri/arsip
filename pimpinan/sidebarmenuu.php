@@ -1,6 +1,6 @@
 <?php 
 	 include '../koneksi/koneksi.php';
-			$sql  		= "SELECT * FROM tb_admin where id_admin='".$_SESSION['id']."'";                        
+      $sql  		= "SELECT * FROM tb_pimpinan where id_pimpinan='".$_SESSION['id']."'";                       
 			$query  	= mysqli_query($db, $sql);
 			$data 		= mysqli_fetch_array($query);
 ?>
@@ -30,18 +30,15 @@
               <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-file-text"></i> Data Arsip <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+                  
                       <li><a href="datapurchaseorder.php"><i class="fa fa-inbox"></i>Purchase Order</a></li>
                       <li><a href="datafakturpajak.php"><i class="fa fa-file-archive-o"></i>Faktur Pajak</a></li>
                       <li><a href="datapenjualan.php"><i class="fa fa-credit-card"></i>Penjualan</a></li>
                       <li><a href="datapembayaran.php"><i class="fa fa-shopping-cart"></i>Pembayaran</a></li>
-                    </ul>
+                    
                   </li>
                 </ul>
-                <ul class="nav side-menu">
-                  <li><a href="feedback.php"><i class="fa fa-comment"></i> Feedback </a></li>
-                </ul>
+                
               </div>
             </div>
             <!-- /sidebar menu -->

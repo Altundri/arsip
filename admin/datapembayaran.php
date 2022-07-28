@@ -68,16 +68,55 @@ include "login/ceksession.php";
                       <a href="inputpembayaran.php"><button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Pembayaran</button></a>
                   
                   <div class="x_content">
+                    
+                  <br>
+                    <table  style="width:100%">
+                      <tr>
+                        <th>
+                          
+                          <form method="get">
+                            <label>Tanggal : </label>
+                            <input type="date"  name="tanggal">
+                            <input  type="submit" value="Cari">
+                          </form>
+                        </th>
+                        <th style="text-align:center">
+                          <form method="get">
+                            <label>Bulan : </label>
+                            <input type="month"  name="bulan">
+                            <input  type="submit" value="Cari">
+                          </form>
+                        </th>
+                        <th style="text-align:right">
+                          <form method="get">
+                            <label>Tahun : </label>
+                            <input type="years"  name="tahun">
+                            <input  type="submit" value="Cari">
+                          </form>
+                        </th>
+                      </tr>
+                    </table>
+                    <br>
+
                   <div class="x_content">
                               <?php
                               include '../koneksi/koneksi.php';
-                              $sql1  		= "SELECT * FROM tb_pembayaran";                        
-                              $query1  	= mysqli_query($db, $sql1);
-                              $total		= mysqli_num_rows($query1);
-                              if ($total == 0) {
-                                echo"<center><h2>Belum Ada Data Pembayaran</h2></center>";
+                              if(isset($_GET['tanggal'])){
+                                $tgl = $_GET['tanggal'];
+                                $sql = mysqli_query($db,"SELECT * FROM tb_pembayaran WHERE tanggal_pb LIKE '%".$tgl."%'");
+                              } 
+                              else if(isset($_GET['bulan'])) {
+                                $bln = $_GET['bulan'];
+                                $sql = mysqli_query($db,"SELECT * FROM tb_pembayaran WHERE tanggal_pb LIKE '%".$bln."%'");
                               }
-                              else{?>
+                              else if(isset($_GET['tahun'])) {
+                                $thn = $_GET['tahun'];
+                                $sql = mysqli_query($db,"SELECT * FROM tb_pembayaran WHERE YEAR(tanggal_pb) LIKE '%".$thn."%'");
+                              }
+                             else {
+                              $sql = mysqli_query($db,"select * from tb_pembayaran");
+                             }
+                              ?> 
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                                 
@@ -94,10 +133,12 @@ include "login/ceksession.php";
 
 
                       <tbody>
-                            <?php
-                            while($data = mysqli_fetch_array($query1)){
+                      <?php
+                            $no=0;
+                            while($data = mysqli_fetch_array($sql)){
+                              $no++;
                               echo'<tr>
-                              <td>	'. $data['id_pb'].'  	</td>
+                              <td>	'. $no.'  	</td>
                               <td>	'. $data['nama_pb'].'		</td>
                               <td>	'. $data['alamat_pb'].'	</td>
                               <td>	'. $data['jumlah_pb'].'	</td>
@@ -113,7 +154,6 @@ include "login/ceksession.php";
                             ?>
                       </tbody>
                     </table>
-                   <?php } ?>
                   </div>
                   </div>
                 </div>

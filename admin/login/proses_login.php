@@ -21,7 +21,7 @@ if ($jumlah>0){
 	header('location:../');
 	}
 else{
-    echo "<center>Username atau Password anda salah<br><br><h3>Silahkan Ulangi </h3></center>";
-	echo "<meta http-equiv='refresh' content='2;url=../login/'>";
+    echo "<script>alert('Username atau password salah !! Silahkan Ulangi ');
+    			window.location.href ='../login/';</script>";
 }
 ?>

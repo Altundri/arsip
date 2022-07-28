@@ -68,16 +68,55 @@ include "login/ceksession.php";
                   <a href="inputfakturpajak.php"><button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Faktur Pajak</button></a>
                   
                   <div class="x_content">
+
+                  <br>
+                    <table  style="width:100%">
+                      <tr>
+                        <th>
+                          
+                          <form method="get">
+                            <label>Tanggal : </label>
+                            <input type="date"  name="tanggal">
+                            <input  type="submit" value="Cari">
+                          </form>
+                        </th>
+                        <th style="text-align:center">
+                          <form method="get">
+                            <label>Bulan : </label>
+                            <input type="month"  name="bulan">
+                            <input  type="submit" value="Cari">
+                          </form>
+                        </th>
+                        <th style="text-align:right">
+                          <form method="get">
+                            <label>Tahun : </label>
+                            <input type="years"  name="tahun">
+                            <input  type="submit" value="Cari">
+                          </form>
+                        </th>
+                      </tr>
+                    </table>
+                    <br>
+
                   <div class="x_content">
                               <?php
                               include '../koneksi/koneksi.php';
-                              $sql1  		= "SELECT * FROM tb_fakturpajak ";                        
-                              $query1  	= mysqli_query($db, $sql1);
-                              $total		= mysqli_num_rows($query1);
-                              if ($total == 0) {
-                                echo"<center><h2>Belum Ada Data Faktur Pajak</h2></center>";
+                              if(isset($_GET['tanggal'])){
+                                $tgl = $_GET['tanggal'];
+                                $sql = mysqli_query($db,"SELECT * FROM tb_fakturpajak WHERE tanggal_fp LIKE '%".$tgl."%'");
+                              } 
+                              else if(isset($_GET['bulan'])) {
+                                $bln = $_GET['bulan'];
+                                $sql = mysqli_query($db,"SELECT * FROM tb_fakturpajak WHERE tanggal_fp LIKE '%".$bln."%'");
                               }
-                              else{?>
+                              else if(isset($_GET['tahun'])) {
+                                $thn = $_GET['tahun'];
+                                $sql = mysqli_query($db,"SELECT * FROM tb_fakturpajak WHERE YEAR(tanggal_fp) LIKE '%".$thn."%'");
+                              }
+                             else {
+                              $sql = mysqli_query($db,"select * from tb_fakturpajak");
+                             }
+                              ?> 
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
@@ -102,10 +141,12 @@ include "login/ceksession.php";
 
 
                       <tbody>
-                            <?php
-                            while($data = mysqli_fetch_array($query1)){
+                      <?php
+                            $no=0;
+                            while($data = mysqli_fetch_array($sql)){
+                              $no++;
                               echo'<tr>
-                              <td>	'. $data['id_fp'].'  	</td>
+                              <td>	'. $no.'  	</td>
                               <td>	'. $data['nomor_fp'].'  	</td>
                               <td>	'. $data['tanggal_fp'].'		</td>
                               <td>	'. $data['nama_pkp'].'	</td>
@@ -124,7 +165,7 @@ include "login/ceksession.php";
                             ?>
                       </tbody>
                     </table>
-                    <?php } ?>
+                    
                   </div>
                   </div>
                 </div>

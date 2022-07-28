@@ -52,7 +52,7 @@ include "login/ceksession.php";
           <div class="">
             <div class="page-title">
               <div class="title_right">
-                <h2>Penjualan > <small>Data Penjualan</small></h2>
+                <h2>Feedback > <small>Data Feedback</small></h2>
               </div>
             </div>
 
@@ -62,98 +62,53 @@ include "login/ceksession.php";
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Data<small>Penjualan</small></h2>
+                    <h2>Data<small>Feedback</small></h2>
                     <div class="clearfix"></div>
                   </div>
-                  <a href="inputpenjualan.php"><button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Penjualan</button></a>
-                 
+                      
                   <div class="x_content">
-                  <br>
-                    <table  style="width:100%">
-                      <tr>
-                        <th>
-                          
-                          <form method="get">
-                            <label>Tanggal : </label>
-                            <input type="date"  name="tanggal">
-                            <input  type="submit" value="Cari">
-                          </form>
-                        </th>
-                        <th style="text-align:center">
-                          <form method="get">
-                            <label>Bulan : </label>
-                            <input type="month"  name="bulan">
-                            <input  type="submit" value="Cari">
-                          </form>
-                        </th>
-                        <th style="text-align:right">
-                          <form method="get">
-                            <label>Tahun : </label>
-                            <input type="years"  name="tahun">
-                            <input  type="submit" value="Cari">
-                          </form>
-                        </th>
-                      </tr>
-                    </table>
-                    <br>
-
                   <div class="x_content">
                               <?php
                               include '../koneksi/koneksi.php';
-                              if(isset($_GET['tanggal'])){
-                                $tgl = $_GET['tanggal'];
-                                $sql = mysqli_query($db,"SELECT * FROM tb_penjualan WHERE tanggal_pj LIKE '%".$tgl."%'");
-                              } 
-                              else if(isset($_GET['bulan'])) {
-                                $bln = $_GET['bulan'];
-                                $sql = mysqli_query($db,"SELECT * FROM tb_penjualan WHERE tanggal_pj LIKE '%".$bln."%'");
+                              $sql1  		= "SELECT * FROM tb_feedback";                        
+                              $query1  	= mysqli_query($db, $sql1);
+                              $total		= mysqli_num_rows($query1);
+                              $no=0;
+                              if ($total == 0) {
+                                echo"<center><h2>Belum Ada Data Feedback</h2></center>";
                               }
-                              else if(isset($_GET['tahun'])) {
-                                $thn = $_GET['tahun'];
-                                $sql = mysqli_query($db,"SELECT * FROM tb_penjualan WHERE YEAR(tanggal_pj) LIKE '%".$thn."%'");
-                              }
-                             else {
-                              $sql = mysqli_query($db,"select * from tb_penjualan");
-                             }
-                              ?> 
+                              else{?>
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                                 
                         <tr>
                           <th width="8%">No.</th>
-                          <th width="13%">Terima Dari</th>
-                          <th width="22%">Alamat</th>
-                          <th width="23%">Jumlah</th>
-                          <th width="14%">Tanggal</th>
-                          <th width="10%">Deskripsi</th>
+                          <th width="13%">Nama</th>
+                          <th width="23%">Email</th>
+                          <th width="22%">Komentar</th>
                           <th width="15%">Aksi</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
-                      <?php
-                            $no=0;
-                            while($data = mysqli_fetch_array($sql)){
+                            <?php
+                            while($data = mysqli_fetch_array($query1)){
                               $no++;
                               echo'<tr>
-                              <td>	'. $no.'  	</td>
-                              <td>	'. $data['terima_pj'].'		</td>
-                              <td>	'. $data['alamat_pj'].'	</td>
-                              <td>	'. $data['jumlah_pj'].'	</td>
-                              <td>	'. $data['tanggal_pj'].'  		</td>
-                              <td>	'. $data['deskripsi_pj'].'  		</td> 
+                              <td>	'.  $no.'  	</td>
+                              <td>	'. $data['nama'].'		</td>
+                              <td>	'. $data['email'].'	</td>
+                              <td>	'. $data['komentar'].'	</td>
+                             
                               <td style="text-align:center;">
-                              <a href= penjualan/'.$data['file_pj'].'><button type="button" title="Unduh File" class="btn btn-success btn-xs"><i class="fa fa-download"></i></button></a>
-                              <a href=detail-penjualan.php?id_pj='.$data['id_pj'].'><button type="button" title="Detail" class="btn btn-info btn-xs"><i class="fa fa-file-image-o"></i></button></a>
-                              <a href=editpenjualan.php?id_pj='.$data['id_pj'].'><button type="button" title="Edit" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></button></a>
-                              <a onclick="return konfirmasi()" href="proses/proses_hapuspenjualan.php?id_pj='.$data['id_pj'].'"><button type="button" title="Hapus" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a></td>
+                              <a onclick="return konfirmasi()" href="proses/proses_hapusfeedback.php?id_kontak='.$data['id_kontak'].'"><button type="button" title="Hapus" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a></td>
                               </tr>';
                             }
                             ?>
                       </tbody>
                     </table>
-               
+                   <?php } ?>
                   </div>
                   </div>
                 </div>

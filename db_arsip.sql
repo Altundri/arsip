@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2022 at 12:28 PM
+-- Generation Time: Jul 23, 2022 at 05:36 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -86,7 +86,8 @@ CREATE TABLE `tb_feedback` (
 --
 
 INSERT INTO `tb_feedback` (`id_kontak`, `nama`, `email`, `komentar`) VALUES
-(3, 'Altundri Wahyu', 'altundriiwahyu@gmail.com', 'Bagus');
+(7, 'Agung', 'agung@gmail.com', 'Wah keren\r\n'),
+(8, 'Zidan', 'Zidan@gmail.com', 'baguss banget\r\n');
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,7 @@ ALTER TABLE `tb_fakturpajak`
 -- AUTO_INCREMENT for table `tb_feedback`
 --
 ALTER TABLE `tb_feedback`
-  MODIFY `id_kontak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kontak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_pembayaran`
